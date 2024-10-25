@@ -6,6 +6,33 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>アンケートのご協力ありがとうございます</h1>
+        <p>どういった経緯でこの場所を知りましたか？<br>
+            <input type="radio" name="num_of_inq" value="友人や家族">友人や家族
+            <input type="radio" name="num_of_inq" value="旅行雑誌など">旅行雑誌など
+            <input type="radio" name="num_of_inq" value="Instagram">Instagram
+            <input type="radio" name="num_of_inq" value="x">x
+            <input type="radio" name="num_of_inq" value="TikTok">TikTok
+            <input type="radio" name="num_of_inq" value="その他">その他
+        </p>
+        <p>石川への観光は何回目ですか？<br>
+            <input type="radio" name="num_of_unq" value="はじめて">はじめて
+            <input type="radio" name="num_of_unq" value="2回目">2回目
+            <input type="radio" name="num_of_unq" value="3回目">3回目
+            <input type="radio" name="num_of_unq" value="4回以上">4回以上
+        </p>
+        <p>石川県を観光しようと思った理由を教えてください<br>
+            <textarea name="reason" rows="4" cols="50">
+            </textarea>
+        </p>
+        <p>石川での観光で不便だと感じたことを教えてください<br>
+            <textarea name="freeans" rows="4" cols="50">
+            </textarea>
+        </p>
+        <button type="submit" onclick="location.href='http://127.0.0.1:5000/useself'">前のページ
+        </button>
+        <button type="submit" onclick="location.href='http://127.0.0.1:5000/end'">次のページ
+        </button>
+
 </body>
 </html>
