@@ -14,6 +14,9 @@ db = SQLAlchemy(app)
 
 class Questionnaire(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_ages = db.Column(db.String(4) , unique = True)
+    user_sex = db.Column(db.String(2) , unique = True)
+    user_place = db.Column(db.String(10) , unique = True)
     quesitonnaire_result = db.Column(db.String(50) , unique = True)
 
 ##アンケート部分
@@ -29,6 +32,25 @@ def home():
 @app.route("/information")
 def information():
     return render_template("information.html")
+
+@app.route("/add", methods = ["POST"])
+def add():
+    ##db追加
+    #年齢
+    userages = request.form.get("user_ages")
+
+    #性別
+    usersex = request.form.get("sex")
+
+    #出身地
+    userplace = request.form.get("place")
+
+    #db格納
+    user_new_data = Questionnaire(user_ages = userages, user_sex = usersex, user_place = userplace)
+    db.session.add(user_new_data)
+    db.session.commit()
+
+    return render_template("useself.html")
 
 #page3
 
