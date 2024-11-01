@@ -12,11 +12,11 @@ db = SQLAlchemy(app)
 
 #db作成
 
-class Questionnaire(db.Model):
+class Personal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_ages = db.Column(db.String(100) , unique = True)
-    user_sex = db.Column(db.String(100) , unique = True)
-    user_place = db.Column(db.String(100) , unique = True)
+    user_ages = db.Column(db.String(100))
+    user_sex = db.Column(db.String(100))
+    user_place = db.Column(db.String(100))
 
 ##アンケート部分
 
@@ -45,7 +45,7 @@ def add():
     userplace = request.form.get("place")
 
     #db格納
-    user_new_data = Questionnaire(user_ages = userages, user_sex = usersex, user_place = userplace)
+    user_new_data = Personal(user_ages = userages, user_sex = usersex, user_place = userplace)
     db.session.add(user_new_data)
     db.session.commit()
 
