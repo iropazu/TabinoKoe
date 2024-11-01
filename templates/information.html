@@ -6,17 +6,21 @@
     <title>personal_information</title>
 </head>
 <body>
-    <form method="POST" action="/add">
+    <form method="POST" action="/useself">
     <div class="ages">
         <label for="user_ages">年齢:</label>
         <input type="number" name="user_ages" id="user_ages"
          min="0" max="150" step="1" required>
     </div>
 
-    <div class="sex">
-        <input id="male" type="radio" name="sex" value="male" checked><label for="male">男性</label>
-        <input id="female" type="radio" name="sex" value="female"><label for="female">女性</label>
-    </div>
+    <p>性別<br>
+        <select name="sex" id="sex">
+            <option value="" selected>選択してください</option>
+            <option value="male">男</option>
+            <option value="female">女</option>
+            <option value="other">その他・回答しない</option>
+        </select>
+    </p>
 
     <p>出身地<br>
         <select name="place" id="place">

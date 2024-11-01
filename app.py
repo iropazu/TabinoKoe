@@ -14,10 +14,9 @@ db = SQLAlchemy(app)
 
 class Questionnaire(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_ages = db.Column(db.String(4) , unique = True)
-    user_sex = db.Column(db.String(2) , unique = True)
-    user_place = db.Column(db.String(10) , unique = True)
-    quesitonnaire_result = db.Column(db.String(50) , unique = True)
+    user_ages = db.Column(db.String(100) , unique = True)
+    user_sex = db.Column(db.String(100) , unique = True)
+    user_place = db.Column(db.String(100) , unique = True)
 
 ##アンケート部分
 
@@ -33,7 +32,7 @@ def home():
 def information():
     return render_template("information.html")
 
-@app.route("/add", methods = ["POST"])
+@app.route("/useself", methods = ["POST"])
 def add():
     ##db追加
     #年齢
@@ -50,13 +49,12 @@ def add():
     db.session.add(user_new_data)
     db.session.commit()
 
+
     return render_template("useself.html")
 
 #page3
 
-@app.route("/useself")
-def useself():
-    return render_template("useself.html")
+
 
 #page4
 
