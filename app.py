@@ -1,6 +1,6 @@
 #import部分
 
-
+import json
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -28,9 +28,11 @@ def home():
 
 #page2
 
-@app.route("/information")
-def information():
-    return render_template("information.html")
+@app.route("/information", methods = ['GET'])
+def show_form():
+    with open('static/prefectures.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    return render_template('information.html', prefectures=data['prefectures'])
 
 @app.route("/useself", methods = ["POST"])
 def add():

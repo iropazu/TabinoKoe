@@ -1,0 +1,9 @@
+{
+    "prefectures": [
+      {"value": "hokkaido", "name": "北海道"},
+      {"value": "aomoriken", "name": "青森県"},
+      {"value": "iwateken", "name": "岩手県"},
+      // ... 他の都道府県データ ...
+      {"value": "okinawaken", "name": "沖縄県"}
+    ]
+  }
