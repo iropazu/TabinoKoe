@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TABINOKOE
-    </title>
-
+    <title>TABINOKOE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
-    <h1 align="center">TABINOKOE</h1>
-    <p align="center">金沢のおすすめ観光地アンケート</p>
-    <p align="center">アンケートを開始するためには下のボタンをクリックしてください<p>
-    <button type="submit" onclick="location.href='http://127.0.0.1:5000/information'">アンケートページ</button>
-
+    <div class="container">
+        <h1>金沢のおすすめアンケート</h1>
+        <p>アンケートを開始するためには下のボタンをクリックしてください</p>
+        <button type="submit" onclick="location.href='http://127.0.0.1:5000/information'">アンケートページ</button>
+    </div>
 </body>
 </html>

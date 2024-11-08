@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>これで終了です</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='end.css') }}">
 </head>
 <body>
     <h1>これでアンケートは終わりです<h1>
-    <p>ご協力ありがとうございました<p>
-    <button type="submit" onclick="location.href='http://127.0.0.1:5000/choice'">1ページ戻る</button>  
+    <p>ご協力ありがとうございました<p> 
     <button type="submit" onclick="window.close()">閉じる</button> 
 </body>
 </html>
