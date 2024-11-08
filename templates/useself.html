@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>osusumekankouti</title>
+    <title>おすすめ観光地</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='useself.css') }}">
 </head>
 <body>
     <div class="question">
-        <h1>あなたがおすすめする観光地を教えてください</h1>
+        <div class="title-box">
+            <h1>あなたがおすすめする観光地を教えてください</h1>
+        </div>
         <form action="{{ url_for('add_images', encrypted_id=encrypted_id) }}" method="post" enctype="multipart/form-data">
-            <input type="text" name="place_name">
-            <input type="file" name="image_file">
-            <input type="submit" value="送信">
+            <div class="input-group">
+                <label>場所の名前：</label>
+                <input type="text" name="place_name" placeholder="入力">
+            </div>
+            <div class="input-group">
+                <label>画像フォルダ：</label>
+                <input type="file" name="image_file" accept="image/*">
+            </div>
+            <input type="submit" value="次へ">
         </form>
     </div>
 </body>
