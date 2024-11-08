@@ -34,25 +34,29 @@ def show_form():
         data = json.load(f)
     return render_template('information.html', prefectures=data['prefectures'])
 
-@app.route("/useself", methods = ["POST"])
+@app.route("/useself", methods=["POST"])
 def add():
     ##db追加
     #年齢
     userages = request.form.get("user_ages")
-
     #性別
     usersex = request.form.get("sex")
-
     #出身地
     userplace = request.form.get("place")
 
     #db格納
-    user_new_data = Personal(user_ages = userages, user_sex = usersex, user_place = userplace)
+    user_new_data = Personal(user_ages=userages, user_sex=usersex, user_place=userplace)
     db.session.add(user_new_data)
     db.session.commit()
 
+    # 追加したデータのIDを取得
+    return redirect(url_for('show_useself', user_id=user_new_data.id))
 
-    return render_template("useself.html")
+# 新しいルートを追加
+@app.route("/useself/<int:user_id>")
+def show_useself(user_id):
+    user = Personal.query.get_or_404(user_id)
+    return render_template("useself.html", user=user)
 
 #page3
 
