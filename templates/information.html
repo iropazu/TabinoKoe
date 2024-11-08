@@ -25,53 +25,9 @@
     <p>出身地<br>
         <select name="place" id="place">
             <option value="" selected>選択してください</option>
-            <option value="hokkaido">北海道</option>
-            <option value="aomoriken">青森県</option>
-            <option value="iwateken">岩手県</option>
-            <option value="miyagiken">宮城県</option>
-            <option value="akitaken">秋田県</option>
-            <option value="yamagataken">山形県</option>
-            <option value="hukusimaken">福島県</option>
-            <option value="ibarakiken">茨城県</option>
-            <option value="totigiken">栃木県</option>
-            <option value="gunmaken">群馬県</option>
-            <option value="saitameken">埼玉県</option>
-            <option value="tibaken">千葉県</option>
-            <option value="toukyouto">東京都</option>
-            <option value="kanagawaken">神奈川県</option>
-            <option value="yamanasiken">山梨県</option>
-            <option value="naganoken">長野県</option>
-            <option value="nigataken">新潟県</option>
-            <option value="toyamaken">富山県</option>
-            <option value="ishikawaken">石川県</option>
-            <option value="hukuiken">福井県</option>
-            <option value="gihuken">岐阜県</option>
-            <option value="sizuokaken">静岡県</option>
-            <option value="aitiken">愛知県</option>
-            <option value="mieken">三重県</option>
-            <option value="sigaken">滋賀県</option>
-            <option value="kyoutohu">京都府</option>
-            <option value="osakahu">大阪府</option>
-            <option value="hyougoken">兵庫県</option>
-            <option value="naraken">奈良県</option>
-            <option value="wakayamaken">和歌山県</option>
-            <option value="simaneken">島根県</option>
-            <option value="tottoriken">鳥取県</option>
-            <option value="okayamaken">岡山県</option>
-            <option value="hirosimaken">広島県</option>
-            <option value="yamagutiken">山口県</option>
-            <option value="tokusimaken">徳島県</option>
-            <option value="kagawaken">香川県</option>
-            <option value="ehimeken">愛媛県</option>
-            <option value="koutiken">高知県</option>
-            <option value="hukuokaken">福岡県</option>
-            <option value="sagaken">佐賀県</option>
-            <option value="kumamotoken">熊本県</option>
-            <option value="nagasakiken">長崎県</option>
-            <option value="oitaken">大分県</option>
-            <option value="miyazakiken">宮崎県</option>
-            <option value="kagoshimaken">鹿児島県</option>
-            <option value="okinawaken">沖縄県</option>
+            {% for prefecture in prefectures %}
+            <option value="{{ prefecture.value }}">{{ prefecture.name }}</option>
+            {% endfor %}
         </select>
     </p>
     <button type="submit">次へ</button>
