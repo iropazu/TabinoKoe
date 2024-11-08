@@ -27,12 +27,18 @@ class Personal(db.Model):
     place_name = db.Column(db.String(100))
     image_file = db.Column(db.String(100))
 
+##HomePage
+
+@app.route("/")
+def home():
+    return render_template("main.html")
+
 ##アンケート部分
 
 #page1
 
-@app.route("/home")
-def home():
+@app.route("/home", methods = ['GET'])
+def question_home():
     return render_template("home.html")
 
 #page2
