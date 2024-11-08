@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TABINOKOE</title>
+    <title>アンケートホーム</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>金沢のおすすめアンケート</h1>
         <p>アンケートを開始するためには下のボタンをクリックしてください</p>
-        <button type="submit" onclick="location.href='http://127.0.0.1:5000/information'">アンケートページ</button>
+        <form method="get" action="{{ url_for('show_form') }}">
+        <button type="submit">アンケートページ</button>
+        </form>
     </div>
 </body>
 </html>
