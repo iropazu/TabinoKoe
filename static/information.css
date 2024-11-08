@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    /*background-image: url('../static/images/background_information.jpg');*/
+    /*background-image: url('../static/images/background_information.jpg'); */ /* 背景画像を適用 */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -10,24 +10,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white; /* テキストを白色に設定 */
 }
 
 .container {
     width: 90%;
     max-width: 800px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.6); /* 半透明の黒背景でテキストの読みやすさを向上 */
     border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7); /* 影を追加して浮き上がる効果 */
 }
 
 .title-box {
-    background: rgba(128, 128, 128, 0.8);
+    background: rgba(0, 0, 0, 0.8); /* タイトル部分の背景を少し暗く */
     padding: 15px;
     text-align: center;
 }
 
 h1 {
-    color: white;
+    color: white; /* タイトル文字を白色に設定 */
     margin: 0;
     font-size: 1.5em;
     font-weight: normal;
@@ -46,7 +48,7 @@ h1 {
 .label-text {
     flex: 1;
     font-size: 1.2em;
-    color: #333;
+    color: white; /* ラベル文字を白色に設定 */
 }
 
 .select-button {
@@ -58,8 +60,9 @@ select, input[type="number"] {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: white;
+    background-color: white; /* 入力フィールドの背景を白色に設定 */
     font-size: 1em;
+    color: #333; /* テキストを黒に設定 */
 }
 
 .navigation {
@@ -67,19 +70,19 @@ select, input[type="number"] {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.1); /* 半透明の背景を追加 */
 }
 
 .nav-arrow {
-    color: #666;
+    color: white; /* ナビゲーション矢印を白色に設定 */
     font-size: 1.5em;
     cursor: pointer;
     padding: 10px;
 }
 
 .next-button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
     border: none;
     padding: 12px 30px;
     border-radius: 5px;
@@ -88,7 +91,7 @@ select, input[type="number"] {
 }
 
 .next-button:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* ボタンのホバー時の色 */
 }
 
 /* レスポンシブ対応 */
