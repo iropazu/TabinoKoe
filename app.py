@@ -1,7 +1,7 @@
 #import部分
-
+from itsdangerous import URLSafeSerializer
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
@@ -12,6 +12,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+secret_key = 'your-secret-key-here'  # 実際の運用では環境変数などから安全に読み込むことを推奨
+serializer = URLSafeSerializer(secret_key)
 db = SQLAlchemy(app)
 
 
@@ -22,6 +24,8 @@ class Personal(db.Model):
     user_ages = db.Column(db.String(100))
     user_sex = db.Column(db.String(100))
     user_place = db.Column(db.String(100))
+    place_name = db.Column(db.String(100))
+    image_file = db.Column(db.String(100))
 
 ##アンケート部分
 
@@ -54,41 +58,60 @@ def add():
     db.session.add(user_new_data)
     db.session.commit()
 
-    # 追加したデータのIDを取得
-    return redirect(url_for('show_useself', user_id=user_new_data.id))
+    # IDを暗号化
+    encrypted_id = serializer.dumps(user_new_data.id)
+    return redirect(url_for('show_useself', encrypted_id=encrypted_id))
 
-# 新しいルートを追加
-@app.route("/useself/<int:user_id>")
-def show_useself(user_id):
-    user = Personal.query.get_or_404(user_id)
-    return render_template("useself.html", user=user)
+@app.route("/useself/<encrypted_id>")
+def show_useself(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+        return render_template("useself.html", user=user, encrypted_id=encrypted_id)
+    except Exception as e:
+        # 不正なIDの場合は404を返す
+        print(f"Error in show_useself: {str(e)}")
+        return abort(404)
 
 #page3
 
-@app.route("/add_images", methods = ["POST"])
-def add_images():
-    #db追加
-    #場所の名前
-    placename = request.form.get("place_name")
+@app.route("/add_images/<encrypted_id>", methods=["POST"])
+def add_images(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
 
-    #画像データ
-    imagefile = request.files.get("image_file")
-    filename = secure_filename(imagefile.filename)
-    imagefile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # フォームデータの取得
+        placename = request.form.get("place_name")
+        imagefile = request.files.get("image_file")
+        
+        if imagefile:
+            filename = secure_filename(imagefile.filename)
+            imagefile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+            # 既存のユーザーレコードを更新
+            user.place_name = placename
+            user.image_file = filename
+            db.session.commit()
 
-
-    #db格納
-    user_new_date = Question_images(place_name = placename, image_file = filename)
-    db.session.add(user_new_date)
-    db.session.commit()
-
-    return render_template("choice.html")
+        return redirect(url_for('choice', encrypted_id=encrypted_id))
+    except:
+        return abort(404)
 
 #page4
 
-@app.route("/choice")
-def choice():
-    return render_template("choice.html")
+@app.route("/choice/<encrypted_id>")
+def choice(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化して確認
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+        return render_template("choice.html", user=user, encrypted_id=encrypted_id)
+    except Exception as e:
+        print(f"Error in add_images: {str(e)}")
+        return abort(404)
 
 
 

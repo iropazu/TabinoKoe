@@ -39,18 +39,11 @@
 <body>
     <div class="question">
         <h1>あなたがおすすめする観光地を教えてください</h1>
-        <div class="cotent">
-            <p for=”place_name”>場所の名前：</p>
-                <input type=”text” name=”my_name” id=”my_name”>
-            <p for ="image_file">画像フォルダ:<p>
-                <input type="file" name="example" accept=".png, .jpg, .jpeg, .pdf, .doc">
-            <div class="back_btn">
-                <a href="information.html"> ◁</a>
-            </div>
-            <div class="next_btn">
-                <a href="choice.html">▷</a>
-            </div>
-        </div>
+        <form action="{{ url_for('add_images', encrypted_id=encrypted_id) }}" method="post" enctype="multipart/form-data">
+            <input type="text" name="place_name">
+            <input type="file" name="image_file">
+            <input type="submit" value="送信">
+        </form>
     </div>
 </body>
 </html>
