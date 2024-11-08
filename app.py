@@ -37,11 +37,24 @@ def home():
 
 #page2
 
-@app.route("/information", methods = ['GET'])
+@app.route("/information", methods=['GET'])
 def show_form():
-    with open('static/prefectures.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return render_template('information.html', prefectures=data['prefectures'])
+    try:
+        # 絶対パスを使用
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        json_path = os.path.join(base_dir, 'static', 'prefectures.json')
+        
+        # デバッグ用のプリント
+        print(f"Looking for JSON file at: {json_path}")
+        print(f"File exists: {os.path.exists(json_path)}")
+        
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return render_template('information.html', prefectures=data['prefectures'])
+    except Exception as e:
+        # エラーの詳細をログに出力
+        print(f"Error loading JSON: {str(e)}")
+        return str(e), 500  # エラーメッセージをブラウザに表示
 
 @app.route("/useself", methods=["POST"])
 def add():
