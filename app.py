@@ -3,12 +3,17 @@
 import json
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+import os
 
 #定義
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['UPLOAD_FOLDER'] = 'uploads'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 db = SQLAlchemy(app)
+
 
 #db作成
 
@@ -60,7 +65,24 @@ def show_useself(user_id):
 
 #page3
 
+@app.route("/add_images", methods = ["POST"])
+def add_images():
+    #db追加
+    #場所の名前
+    placename = request.form.get("place_name")
 
+    #画像データ
+    imagefile = request.files.get("image_file")
+    filename = secure_filename(imagefile.filename)
+    imagefile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+    #db格納
+    user_new_date = Question_images(place_name = placename, image_file = filename)
+    db.session.add(user_new_date)
+    db.session.commit()
+
+    return render_template("choice.html")
 
 #page4
 
