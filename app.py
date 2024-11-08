@@ -18,6 +18,12 @@ class Questionnaire(db.Model):
     user_sex = db.Column(db.String(100) , unique = True)
     user_place = db.Column(db.String(100) , unique = True)
 
+class choiceanswer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    how_known = db.Column(db.String(100))
+    visit_count = db.Column(db.String(100))
+    visit_reason = db.Column(db.Text)
+    inconvenience = db.Column(db.Text)
 ##アンケート部分
 
 #page1
@@ -58,9 +64,27 @@ def add():
 
 #page4
 
-@app.route("/choice")
+@app.route("/choice",methods = ["GET","POST"])
 def choice():
-    return render_template("choice.html")
+    if request.method == "POST":
+        # フォームデータの取得
+        how_known = request.form.get("how_known")
+        visit_count = request.form.get("visit_count")
+        visit_reason = request.form.get("visit_reason")
+        inconvenience = request.form.get("inconvenience")
+
+        # 最新のユーザーレコードを取得して更新
+        latest_user = Questionnaire.query.order_by(Questionnaire.id.desc()).first()
+        if latest_user:
+            latest_user.how_known = how_known
+            latest_user.visit_count = visit_count
+            latest_user.visit_reason = visit_reason
+            latest_user.inconvenience = inconvenience
+            db.session.commit()
+
+        return redirect(url_for('choice'))
+    if request.method == "GET":
+        return render_template("end.html")
 
 
 

@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <form method="POST" action="/choice">
     <h1>アンケートのご協力ありがとうございます</h1>
         <p>どういった経緯でこの場所を知りましたか？<br>
             <input type="radio" name="num_of_inq" value="友人や家族">友人や家族
@@ -29,10 +30,12 @@
             <textarea name="freeans" rows="4" cols="50">
             </textarea>
         </p>
-        <button type="submit" onclick="location.href='http://127.0.0.1:5000/useself'">前のページ
+        <button type="submit">次のページ
         </button>
-        <button type="submit" onclick="location.href='http://127.0.0.1:5000/end'">次のページ
-        </button>
+    </form>
+    <form method= "POST" action="http://127.0.0.1:5000/useself">
+        <button type="submit">前のページ</button>
+    </form>
 
 </body>
 </html>
