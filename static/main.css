@@ -1,0 +1,74 @@
+body {
+    background: url('../static/images/金沢写真_main2.jpg');
+    background-size: cover;
+    font-family: 'Yu Mincho', 'Hiragino Mincho Pro', serif; /* 和風のフォント */
+    color: #4a3b2a; /* 茶系の落ち着いた色 */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+button {
+    background-color: #4caf50; /* 緑色 */
+    color: #fff;
+    border: 2px solid #333333; /* ボーダーも少し濃い茶色 */
+    padding: 15px 30px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 210px;
+}
+
+button:hover {
+    background-color: #388e3c; /* 少し濃い緑色に */
+    transform: scale(1.05); /* 少し拡大してクリックを誘導 */
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 10px #333333;
+}
+
+/* 和紙のような背景テクスチャを模したスタイル */
+.container {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #d3c4a3;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* ボタンの配置を中央に */
+.button-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* リンクボタンも和風に */
+a {
+    text-decoration: none;
+    color: #b28f62;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #8e7358;
+}
+
+/* モバイル対応調整 */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    button {
+        width: 100%;
+    }
+}
