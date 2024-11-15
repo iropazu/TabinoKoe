@@ -14,11 +14,11 @@
         <form action="{{ url_for('add_images', encrypted_id=encrypted_id) }}" method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <label>場所の名前：</label>
-                <input type="text" name="place_name" placeholder="入力">
+                <input type="text" name="place_name" placeholder="入力" required>
             </div>
             <div class="input-group">
                 <label>画像フォルダ：</label>
-                <input type="file" name="image_file" accept="image/*">
+                <input type="file" name="image_file" accept="image/*" required>
             </div>
             <input type="submit" value="次へ">
         </form>
