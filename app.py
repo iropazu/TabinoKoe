@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-secret_key = 'your-secret-key-here'  # 実際の運用では環境変数などから安全に読み込むことを推奨
+secret_key = 'your-secret-key-here'  
 serializer = URLSafeSerializer(secret_key)
 db = SQLAlchemy(app)
 
@@ -26,6 +26,11 @@ class Personal(db.Model):
     user_place = db.Column(db.String(100))
     place_name = db.Column(db.String(100))
     image_file = db.Column(db.String(100))
+    know_place = db.Column(db.String(100))
+    count_kanazawa = db.Column(db.String(100))
+    favorite_activity = db.Column(db.String(1999))
+    additional_comments = db.Column(db.String(1999))
+
 
 ##HomePage
 
@@ -132,15 +137,46 @@ def choice(encrypted_id):
         print(f"Error in add_images: {str(e)}")
         return abort(404)
 
+@app.route("/add_texts/<encrypted_id>", methods = ["POST"])
+def add_texts(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+
+        # フォームデータの取得
+        know_place = request.form.get("know_place")
+        count_kanazawa = request.form.get("count_kanazawa")
+        favorite_activity = request.form.get("favorite_activity")
+        additional_comments = request.form.get("additional_comments")
+
+        #dbを更新
+        user.know_place = know_place
+        user.count_kanazawa = count_kanazawa
+        user.favorite_activity = favorite_activity
+        user.additional_comments = additional_comments
+        db.session.commit()
+
+        return redirect(url_for('end', encrypted_id=encrypted_id))
+    except:
+        return abort(404)
+
 
 
 
 
 #page5
 
-@app.route("/end")
-def end():
-    return render_template("end.html")
+@app.route("/end/<encrypted_id>")
+def end(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化して確認
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+        return render_template("end.html", user=user, encrypted_id=encrypted_id)
+    except Exception as e:
+        print(f"Error in add_images: {str(e)}")
+        return abort(404)
 
 
 #実行部分
