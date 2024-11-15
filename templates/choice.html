@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>詳細部分</title>
 </head>
 <body>
-    <form method="post" action="">
+    <form method="post" action="{{ url_for('add_texts', encrypted_id=encrypted_id) }}">
         <div class="form-content">
             <div class="form-group">
                 <div class="label-text">どこでこの場所を知りましたか？</div>
                 <div class="select-button">
-                    <select name="place" id="place">
+                    <select name="know_place" id="know_place">
                         <option value="" selected>選択してください</option>
                         <option value="familiy">家族から</option>
                         <option value="friends">友達から</option>
@@ -25,21 +25,21 @@
                     <div class="label-text">石川県への観光は何回目ですか？</div>
                     <div class="select-button">
                         <input type="number" name="count_kanazawa" id="count_kanazawa"
-                        min="0" max="150" step="1" required>
+                        min="0" max="400" step="1" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="label-text">旅行中に不便だと感じることを教えてください</div>
                     <textarea name="favorite_activity" id="favorite_activity" rows="4" cols="50"
-                    placeholder="ご自由にお書きください"></textarea>
+                    placeholder="ご自由にお書きください" minlength="1" maxlength="1000" required></textarea>
                 </div>
     
                 
                 <div class="form-group">
                     <div class="label-text">訪れようと考えた理由を教えてください</div>
                     <textarea name="additional_comments" id="additional_comments" rows="4" cols="50"
-                    placeholder="ご自由にお書きください"></textarea>
+                    placeholder="ご自由にお書きください" minlength="1" maxlength="1000"></textarea>
                 </div>
             
             </div>
