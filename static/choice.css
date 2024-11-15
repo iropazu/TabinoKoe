@@ -1,95 +1,118 @@
 /* Base styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Noto Serif JP', serif; /* 日本語に適したフォント */
     margin: 0;
     padding: 0;
-    background-image: url('../static/images/金沢写真_chice.jpg'); /* 背景画像を設定 */
+    background-image: url('../static/images/金沢写真_chice.jpg'); /* 背景画像を適用 */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
-    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 form {
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景を半透明の黒で統一 */
+    padding: 30px 50px;
     border-radius: 10px;
+    text-align: center;
+    width: 90%;
     max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-    width: 90%; /* スマホ画面にも対応するため幅を調整 */
+    color: #fff;
 }
 
-.form-group {
-    margin-bottom: 20px;
-}
-
-.label-text {
-    margin-bottom: 8px;
-    font-size: 18px;
+label {
+    font-size: 22px;
+    margin-bottom: 15px;
+    display: inline-block;
 }
 
 select,
-input[type="number"],
-textarea {
+textarea,
+input {
+    display: block;
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
+    padding: 15px; /* 高さを広げる */
+    margin-top: 10px;
+    font-size: 18px; /* フォントサイズを拡大 */
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #000;
-    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px; /* フォーム間のスペースを広げる */
 }
 
 textarea {
     resize: none;
+    height: 150px; /* テキストエリアの高さを増やす */
 }
 
 select:focus,
-input[type="number"]:focus,
-textarea:focus {
+textarea:focus,
+input:focus {
     outline: none;
     border-color: #ffcc00;
-    box-shadow: 0 0 5px #ffcc00;
+    box-shadow: 0 0 10px #ffcc00;
 }
 
-select option {
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
+/* Next button styling */
+.next-button {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #333;
+    font-size: 20px; /* ボタンのフォントを拡大 */
+    padding: 15px 40px; /* ボタンのサイズを調整 */
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.next-button:hover {
+    background-color: #e6b800;
+    cursor: pointer;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
-    .label-text {
-        font-size: 16px;
+    label {
+        font-size: 20px;
     }
 
     select,
-    input[type="number"],
-    textarea {
-        font-size: 14px;
+    textarea,
+    input {
+        font-size: 16px;
+        padding: 12px;
     }
 
-    form {
-        padding: 15px;
+    .next-button {
+        font-size: 18px;
+        padding: 12px 30px;
     }
 }
 
 @media (max-width: 480px) {
-    .label-text {
-        font-size: 14px;
+    label {
+        font-size: 18px;
     }
 
     select,
-    input[type="number"],
-    textarea {
-        font-size: 12px;
+    textarea,
+    input {
+        font-size: 14px;
+        padding: 10px;
     }
 
-    form {
-        padding: 10px;
+    .next-button {
+        font-size: 16px;
+        padding: 10px 25px;
     }
 }
