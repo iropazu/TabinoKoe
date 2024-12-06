@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 from flask import app, abort
+from app import Personal
 
 # グラフ表示エンドポイント
 @app.route("/graph")
