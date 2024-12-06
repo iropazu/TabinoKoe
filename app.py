@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
+from fetch_data_from_sql import data
+from plot_data import data
 
 #定義
 
@@ -177,6 +179,17 @@ def end(encrypted_id):
     except Exception as e:
         print(f"Error in add_images: {str(e)}")
         return abort(404)
+    
+    
+    
+@app.route("/gurahu")
+def kaiseki():
+    db_path = r"C:\Users\youic\Desktop\2024後期\PD実践\instance\db.sqlite"  # データベースのパス
+    query = "SELECT * FROM table_name"  # 実際のクエリに置き換えてください
+    data = fetch_data_from_sql(db_path, query)
+    return data.to_html()
+    
+    
 
 
 #実行部分
