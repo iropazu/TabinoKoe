@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おすすめの観光地の提案</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='recommend.css') }}">
+</head>
+<body>
+    <h1>おすすめの観光地はこちらです<h1>
+    <p>この観光地がおすすめの人はこんな人です<p> 
+    <form method="get" action="{{ url_for('home') }}">
+    <button type="submit">ホームに戻る</button> 
+    </form>
+</body>
+</html>
