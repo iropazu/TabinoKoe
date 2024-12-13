@@ -5,8 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
-from fetch_data_from_sql import data
-from plot_data import data
+
 
 #定義
 

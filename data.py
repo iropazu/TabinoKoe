@@ -1,50 +1,74 @@
 import sqlite3
-import pandas as pd
-import matplotlib.pyplot as plt
+import os
+import csv
 
-
-# データベース接続
-def fetch_data_from_sql(link, query):
-    try:
-        # SQLiteデータベースに接続
-        conn = sqlite3.connect(link)
-        # クエリ実行
-        df = pd.read_sql_query(query, conn)
-        conn.close()
-        return df
-    except Exception as e:
-        print(f"エラー: {e}")
-        return None
-
-# グラフ作成
-def plot_data(df, x_column, y_column, plot_type="line"):
-    try:
-        if plot_type == "line":
-            df.plot(x=x_column, y=y_column, kind="line")
-        elif plot_type == "bar":
-            df.plot(x=x_column, y=y_column, kind="bar")
-        elif plot_type == "scatter":
-            df.plot(x=x_column, y=y_column, kind="scatter")
-        else:
-            print("対応していないグラフ形式です。")
-            return
+def export_sqlite_to_csv(db_path, output_dir):
+    # データベースファイルが存在するか確認
+    if not os.path.exists(db_path):
+        print(f"Error: Database file not found at {db_path}")
+        return
+    
+    # 出力ディレクトリが存在しない場合は作成
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # SQLiteデータベースに接続
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    
+    # データベース内のすべてのテーブル名を取得
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cursor.fetchall()
+    
+    if not tables:
+        print("No tables found in the SQLite database.")
+        return
+    
+    # 各テーブルをCSVファイルにエクスポート
+    for table_name in tables:
+        table_name = table_name[0]  # テーブル名を取得
+        output_file = os.path.join(output_dir, f"{table_name}.csv")
         
-        plt.title("SQL Data Visualization")
-        plt.xlabel(x_column)
-        plt.ylabel(y_column)
-        plt.grid(True)
-        plt.show()
-    except Exception as e:
-        print(f"グラフ作成エラー: {e}")
+        # テーブルのデータを取得
+        cursor.execute(f"SELECT * FROM {table_name}")
+        rows = cursor.fetchall()
+        
+        # テーブルのカラム名を取得
+        column_names = [description[0] for description in cursor.description]
+        
+        # CSVファイルに書き込む（日本語対応のエンコーディング）
+        with open(output_file, 'w', newline='', encoding='utf-8-sig') as file:
+            writer = csv.writer(file)
+            writer.writerow(column_names)  # ヘッダーを書き込み
+            writer.writerows(rows)  # データを書き込み
+        
+        print(f"Table '{table_name}' exported to {output_file}")
+    
+    # 接続を閉じる
+    conn.close()
+    print("Export completed.")
 
 # 使用例
-if __name__ == "__main__":
-    # データベース名とクエリを指定
-    database_name = "example.db"
-    sql_query = "SELECT date, value FROM sample_table;"  # 適切なクエリを指定
-    data = fetch_data_from_sql(database_name, sql_query)
-    
-    if data is not None:
-        print(data.head())  # データを確認
-        # データをグラフ化
-        plot_data(data, x_column="date", y_column="value", plot_type="line")
+db_path = "../instance/db.sqlite"  # アップロードされたデータベースファイルのパス
+output_dir = "../uploads"  # CSVファイルを格納するディレクトリ
+export_sqlite_to_csv(db_path, output_dir)
+
+
+
+#input_csv = r"personal.csvファイルのある場所のパスを入力"
+
+import pandas as pd
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(input_csv)
+df = df.drop(['image_file'], axis=1)
+df['user_sex'] = df['user_sex'].astype(str)
+
+sex_counts = df['user_sex'].value_counts()
+print(df['user_sex'])
+print(sex_counts)
+sex_counts.plot.pie(autopct='%1.1f%%', startangle=90, ylabel='')
+
+plt.show()
