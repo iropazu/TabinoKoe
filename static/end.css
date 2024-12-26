@@ -1,0 +1,81 @@
+/* style.css */
+body {
+    font-family: 'Yu Mincho', 'Hiragino Mincho Pro', serif;
+    background-image: url('../static/images/金沢写真_end.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 50px;
+    font-size: 2.5em;
+    color: #FFDD44;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+p {
+    font-size: 1.5em;
+    margin: 20px 0;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #444;
+    color: #FFDD44;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background-color: #666;
+    color: #FFFFFF;
+}
+
+/* スマートフォン（768px以下の画面幅）に対応 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+        margin-top: 30px;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 8px 16px;
+    }
+}
+
+/* 小さなスマートフォン（480px以下の画面幅）に対応 */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 6px 12px;
+    }
+
+    body {
+        padding: 10px; /* 小さい画面での余白調整 */
+    }
+}

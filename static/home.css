@@ -1,0 +1,96 @@
+/* 基本スタイル */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Yu Gothic", Arial, sans-serif;
+    background-image: url('../static/images/金沢写真_home.jpg'); /* 背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #f8f4e6; /* 柔らかいアイボリー色 */
+    text-align: center;
+}
+
+/* 全体のレイアウト */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* 背景の半透明フィルター */
+    padding: 20px;
+}
+
+/* 見出しスタイル */
+h1 {
+    font-size: 3em;
+    color: #ffcc66; /* 和風の風情を感じる琥珀色 */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* テキストブロックスタイル */
+p {
+    font-size: 1.2em;
+    color: #f8f4e6; /* 柔らかいアイボリー色 */
+    background-color: rgba(47, 79, 79, 0.7); /* 渋い緑がかった灰色 */
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ボタンスタイル */
+button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #f8f4e6; /* 柔らかいアイボリー色 */
+    background-color: #a0522d; /* 茶色系で和風感 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #8b4513; /* 濃い茶色に変化 */
+}
+
+/* --- レスポンシブデザイン --- */
+
+/* 小型デバイス（幅768px以下）用 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 12px 20px;
+    }
+}
+
+/* 超小型デバイス（幅480px以下）用 */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 0.9em;
+        padding: 6px 10px;
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+}

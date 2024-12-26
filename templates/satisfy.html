@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アンケートに対する調査</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='satisfy.css') }}">
+</head>
+<body>
+    <form action="{{ url_for('add_answers', encrypted_id=encrypted_id) }}" method="post" enctype="multipart/form-data">
+    <div class="pb-rating-graph">
+        <ul>
+            <li>
+                <div class="pb-rating-graph__label">質問の量に対する満足度</div>
+                <div class="pb-rating-graph__wrap">
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足している</span></div>
+                    <div class="pb-rating-graph__axis">
+                        <input  type="radio" id ="1" name="value_question" value="1" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="2" name="value_question" value="2" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="3" name="value_question" value="3" data-check="true" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="4" name="value_question" value="4" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="5" name="value_question" value="5" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                    </div>
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足していない</span></div>
+                </div>
+            </li>
+            <li>
+                <div class="pb-rating-graph__label">自由記述に対する快適度</div>
+                <div class="pb-rating-graph__wrap">
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足している</span></div>
+                    <div  class="pb-rating-graph__axis">
+                        <input  type="radio" id ="1" name="free_write" value="1" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="2" name="free_write" value="2" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="3" name="free_write" value="3" data-check="true" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="4" name="free_write" value="4" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="5" name="free_write" value="5" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                    </div>
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足していない</span></div>
+                </div>
+            </li>
+            <li>
+                <div class="pb-rating-graph__label">アンケートの背景は適切であったか</div>
+                <div class="pb-rating-graph__wrap">
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足している</span></div>
+                    <div  class="pb-rating-graph__axis">
+                        <input  type="radio" id ="1" name="back_change" value="1" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="2" name="back_change" value="2" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="3" name="back_change" value="3" data-check="true" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="4" name="back_change" value="4" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="5" name="back_change" value="5" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                    </div>
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足していない</span></div>
+                </div>
+            </li>
+            <li>
+                <div class="pb-rating-graph__label">提案された観光地に対する満足度</div>
+                <div class="pb-rating-graph__wrap">
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足している</span></div>
+                    <div name = "free_write" id = "free_write" class="pb-rating-graph__axis">
+                        <input  type="radio" id ="1" name="problem_solve" value="1" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="2" name="problem_solve" value="2" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="3" name="problem_solve" value="3" data-check="true" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="4" name="problem_solve" value="4" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                        <input  type="radio" id ="5" name="problem_solve" value="5" class="pb-rating-graph__scale"><span class="pb-rating-graph__item"></span>
+                    </div>
+                    <div class="pb-rating-graph__basis"><span class="pb-rating-graph__basis-inner">満足していない</span></div>
+                </div class="next_btn">
+                <input type="submit" value="次へ">
+            </li>
+        </ul>
+    </div>
+    </form>
+</body>
+</html>
