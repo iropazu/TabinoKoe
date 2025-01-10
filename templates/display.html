@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- ランダムな推薦を表示 -->
+    <h2>おすすめの場所: {{ recommendation.place_name }}</h2>
+    <img src="{{ url_for('static', filename='images/' + recommendation.image_file) }}" alt="{{ recommendation.place_name }}">
+    
+    <!-- メインページに戻るボタン -->
+    <form method="get" action="{{ url_for('home') }}">
+    <button type="submit">ホームに戻る</button> 
+    </form>
+</body>
+</html>
