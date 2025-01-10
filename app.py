@@ -302,9 +302,16 @@ if __name__ == "__main__":
         # テーブルが空の場合、ダミーデータを追加
         if not Recommendation.query.first():
             dummy_data = [
-                Recommendation(place_name="東京タワー", image_file="tokyo_tower.jpg"),
-                Recommendation(place_name="富士山", image_file="mount_fuji.jpg"),
-                Recommendation(place_name="京都寺院", image_file="kyoto_temple.jpg")
+                Recommendation(place_name="兼六園", image_file="兼六園.jpg"),
+                Recommendation(place_name="近江町市場", image_file="近江町市場.jpg"),
+                Recommendation(place_name="金沢21世紀美術館", image_file="金沢21世紀美術館.jpg"),
+                Recommendation(place_name="ひがし茶屋街", image_file="ひがし茶屋街.jpg"),
+                Recommendation(place_name="金沢城", image_file="金沢城.jpg"),
+                Recommendation(place_name="鼓門", image_file="鼓門.jpg"),
+                Recommendation(place_name="尾山神社", image_file="尾山神社.jpg"),
+                Recommendation(place_name="メタセコイア並木道", image_file="メタセコイア並木道.jpg"),
+                Recommendation(place_name="長町武家屋敷跡界隈", image_file="長町武家屋敷跡界隈.jpg"),
+                Recommendation(place_name="金沢城公園", image_file="金沢城公園 (3).jpg"),
             ]
             db.session.bulk_save_objects(dummy_data)
             db.session.commit()
