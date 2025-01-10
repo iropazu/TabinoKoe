@@ -64,6 +64,10 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+class Recommendation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    place_name = db.Column(db.String(100), nullable=False)
+    image_file = db.Column(db.String(100), nullable=False)
 
 ##HomePage
 
@@ -213,6 +217,22 @@ def end(encrypted_id):
 
 
 
+@app.route("/display/<encrypted_id>")
+def display(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化して確認
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+        
+        # ランダムな推薦を取得
+        recommendation = Recommendation.query.order_by(db.func.random()).first()
+        
+        return render_template("display.html", user=user, encrypted_id=encrypted_id, recommendation=recommendation)
+    except Exception as e:
+        print(f"Error in display: {str(e)}")
+        return abort(404)
+
+
 #SNS部分
 
 
@@ -266,4 +286,15 @@ def logout():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        
+        # テーブルが空の場合、ダミーデータを追加
+        if not Recommendation.query.first():
+            dummy_data = [
+                Recommendation(place_name="東京タワー", image_file="tokyo_tower.jpg"),
+                Recommendation(place_name="富士山", image_file="mount_fuji.jpg"),
+                Recommendation(place_name="京都寺院", image_file="kyoto_temple.jpg")
+            ]
+            db.session.bulk_save_objects(dummy_data)
+            db.session.commit()
+        
     app.run(debug=True)

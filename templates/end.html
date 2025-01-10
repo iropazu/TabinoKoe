@@ -9,6 +9,10 @@
 <body>
     <h1>これでアンケートは終わりです<h1>
     <p>ご協力ありがとうございました<p> 
+    <form method="get" action="{{ url_for('display', encrypted_id=encrypted_id) }}">
+        <button type="submit">おすすめを見る</button> 
+    </form>
+
     <form method="get" action="{{ url_for('home') }}">
     <button type="submit">ホームに戻る</button> 
     </form>
