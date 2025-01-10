@@ -1,26 +1,40 @@
 #import部分
 from itsdangerous import URLSafeSerializer
 import json
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask import Flask, render_template, request, redirect, url_for, abort, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_migrate import Migrate
 import os
+import uuid
 
 #定義
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 secret_key = 'your-secret-key-here'  
 serializer = URLSafeSerializer(secret_key)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'  # ログインページのエンドポイントを指定
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get((user_id))
 
 
 #db作成
 
 class Personal(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_ages = db.Column(db.String(100))
     user_sex = db.Column(db.String(100))
     user_place = db.Column(db.String(100))
@@ -31,6 +45,29 @@ class Personal(db.Model):
     favorite_activity = db.Column(db.String(1999))
     additional_comments = db.Column(db.String(1999))
 
+class User(db.Model):
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    active = db.Column(db.Boolean, default=True)  # ユーザーがアクティブかどうかを示すフィールド
+
+    @property
+    def is_active(self):
+        return self.active  
+
+    def get_id(self):
+        return self.id  
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+class Recommendation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    place_name = db.Column(db.String(100), nullable=False)
+    image_file = db.Column(db.String(100), nullable=False)
 
 ##HomePage
 
@@ -179,9 +216,85 @@ def end(encrypted_id):
         return abort(404)
 
 
+
+@app.route("/display/<encrypted_id>")
+def display(encrypted_id):
+    try:
+        # 暗号化されたIDを復号化して確認
+        user_id = serializer.loads(encrypted_id)
+        user = Personal.query.get_or_404(user_id)
+        
+        # ランダムな推薦を取得
+        recommendation = Recommendation.query.order_by(db.func.random()).first()
+        
+        return render_template("display.html", user=user, encrypted_id=encrypted_id, recommendation=recommendation)
+    except Exception as e:
+        print(f"Error in display: {str(e)}")
+        return abort(404)
+
+
+#SNS部分
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        # ユーザー名の重複チェック
+        if User.query.filter_by(username=username).first():
+            flash('Username already exists. Please choose a different one.')
+            return redirect(url_for('register'))
+        
+        # 新しいユーザーの作成
+        new_user = User(username=username)
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+        
+        flash('Account created successfully! You can now log in.')
+        return redirect(url_for('login'))  # ログインページにリダイレクト
+    
+    return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        
+        if user and user.check_password(password):
+            login_user(user)
+            return redirect(url_for('home'))  # ログイン後のリダイレクト先
+        else:
+            flash('Invalid username or password')
+    
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
 #実行部分
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        
+        # テーブルが空の場合、ダミーデータを追加
+        if not Recommendation.query.first():
+            dummy_data = [
+                Recommendation(place_name="東京タワー", image_file="tokyo_tower.jpg"),
+                Recommendation(place_name="富士山", image_file="mount_fuji.jpg"),
+                Recommendation(place_name="京都寺院", image_file="kyoto_temple.jpg")
+            ]
+            db.session.bulk_save_objects(dummy_data)
+            db.session.commit()
+        
     app.run(debug=True)
